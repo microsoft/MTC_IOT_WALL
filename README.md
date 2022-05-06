@@ -74,7 +74,7 @@ The final step is to deploy the Node-RED Flow for the Beackhoff Controller. This
 
 - Click on the hamburger menu and select **Import**
 - From the **Import nodes** window
-  - Select **Clipboard** and copy and paste the following [JSON](https://raw.githubusercontent.com/msftkevin/iot-wall/main/beckhoff-flow.json?token=GHSAT0AAAAAABSK6YTHR736RPFHHCE73P3IYTUJ25A) into the text area in the window and click **Import**
+  - Select **Clipboard** and copy and paste the following [JSON](flows/beckhoff-flow.json) into the text area in the window and click **Import**
 
 >At this point you might be prompted for another action. If so, click **Import copy**
 
