@@ -43,7 +43,7 @@ The OPC UA IIoT Wall is hosted on IoT Central in the EXP tenant. To onboard your
 - Login to the [OPC UA IIoT Wall portal](https://opc-ua-iot-wall.azureiotcentral.com/devices) with your **Manager, Product Development - Engineering** persona. For example: In Irvine, it is **Aamil Shammas**. Find the Persona for your Location [here](https://exppeople.azurewebsites.net/)
 - Select your location from the list.
 - From the Device screen, select **Connect** in the upper left corner of the display. You will need the ID Scope, Device ID and Primary Key, to onboard your Wall during the IoT Edge runtime installation in the next step.
-- Now, install the IoT Edge runtime using the IoT Edge Installer from [here](https://github.com/Azure/Industrial-IoT-Gateway-Installer/raw/master/Releases/Windows/setup.exe). No not run the IoT Edge Installer directly from the Web. You will need to download the installer, then run it with Administrator privileges.
+- Now, install the IoT Edge runtime using the IoT Edge Installer from [here](https://github.com/Azure/Industrial-IoT-Gateway-Installer/raw/master/Releases/Windows/setup.exe). No not run the IoT Edge Installer directly from the Web. You will need to download the installer, then ***run it with Administrator privileges***.
 
 - Select **Use Docker Desktop** and **Configure IoT Edge for Azure IoT Central (SaaS**). Provide ID Scope, Device ID and Primary Key from the previous step. Click install.
 
@@ -76,6 +76,12 @@ The final step is to deploy the Node-RED Flow for the Beckhoff Controller. This 
 
 >At this point you might be prompted for another action. If so, click **Import copy**
 
+You should see three tabs across the top of the Node-RED canvas.
+Before you continue with the deployment, you will need to delete the two tabs that were created when Node-RED was initialized for the first time. The two tabs are labeled **Azure IoT Edge** and **Dashboard**.
+
+- Double-click on the **Azure IoT Edge** tab
+- From the pop-out window, click **Delete**
+- Repeat the previous two steps for the **Dashboard** tab
 - Finally, click **Deploy** in the upper right-hand corner of the canvas.
 
 ## Congratulations
