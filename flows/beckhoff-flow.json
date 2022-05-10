@@ -1,1 +1,635 @@
-[{"id":"fb72b2bb9fd6ca8d","type":"tab","label":"Beckhoff","disabled":false,"info":""},{"id":"9f0be49ba79014c7","type":"inject","z":"fb72b2bb9fd6ca8d","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":true,"onceDelay":0.1,"topic":"","payload":"","payloadType":"str","x":130,"y":300,"wires":[["f8ad5fe917455838","6fc230ab05c3f0ad","f721461863cc3aea"]]},{"id":"b6ccdd348f3f1a0f","type":"inject","z":"fb72b2bb9fd6ca8d","name":"Light On","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"true","payloadType":"bool","x":440,"y":660,"wires":[["6747daed85c0e614"]]},{"id":"1fb2739e85c9585d","type":"inject","z":"fb72b2bb9fd6ca8d","name":"Light Off","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"false","payloadType":"bool","x":440,"y":700,"wires":[["6747daed85c0e614"]]},{"id":"46d29ca5a6e8d72f","type":"inject","z":"fb72b2bb9fd6ca8d","name":"Fan On","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"32000","payloadType":"str","x":450,"y":780,"wires":[["97d9d8e780bb77b0"]]},{"id":"c5c536596fa468d5","type":"inject","z":"fb72b2bb9fd6ca8d","name":"Fan Off","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"0","payloadType":"str","x":450,"y":820,"wires":[["97d9d8e780bb77b0"]]},{"id":"2e2cafa773c3d846","type":"debug","z":"fb72b2bb9fd6ca8d","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":1050,"y":740,"wires":[]},{"id":"f8ad5fe917455838","type":"OpcUa-Item","z":"fb72b2bb9fd6ca8d","item":"ns=4;s=MAIN.nTemperature","datatype":"Int16","value":"","name":"nTemperature","x":300,"y":260,"wires":[["10560a25f2223f1b"]]},{"id":"6fc230ab05c3f0ad","type":"OpcUa-Item","z":"fb72b2bb9fd6ca8d","item":"ns=4;s=MAIN.nFan","datatype":"UInt16","value":"","name":"nFan","x":330,"y":300,"wires":[["3b305970addd189b"]]},{"id":"6747daed85c0e614","type":"OpcUa-Item","z":"fb72b2bb9fd6ca8d","item":"ns=4;s=MAIN.bLamp","datatype":"Boolean","value":"msg.payload","name":"Control Lamp","x":640,"y":680,"wires":[["a1c9c6e23d9a277b"]]},{"id":"f721461863cc3aea","type":"OpcUa-Item","z":"fb72b2bb9fd6ca8d","item":"ns=4;s=MAIN.bLamp","datatype":"String","value":"","name":"bLamp","x":330,"y":340,"wires":[["371f9d6aad0a960f"]]},{"id":"97d9d8e780bb77b0","type":"OpcUa-Item","z":"fb72b2bb9fd6ca8d","item":"ns=4;s=MAIN.nFan","datatype":"UInt16","value":"msg.payload","name":"Fan Control","x":650,"y":800,"wires":[["a1c9c6e23d9a277b"]]},{"id":"10560a25f2223f1b","type":"OpcUa-Client","z":"fb72b2bb9fd6ca8d","endpoint":"5903a1fd5e87615c","action":"subscribe","deadbandtype":"a","deadbandvalue":1,"time":"5","timeUnit":"s","certificate":"n","localfile":"","localkeyfile":"","securitymode":"None","securitypolicy":"None","folderName4PKI":"","name":"","x":520,"y":260,"wires":[["5f9b8848d1a0d594"]]},{"id":"3b305970addd189b","type":"OpcUa-Client","z":"fb72b2bb9fd6ca8d","endpoint":"5903a1fd5e87615c","action":"subscribe","deadbandtype":"a","deadbandvalue":1,"time":"5","timeUnit":"s","certificate":"n","localfile":"","localkeyfile":"","securitymode":"None","securitypolicy":"None","folderName4PKI":"","name":"","x":520,"y":300,"wires":[["5f9b8848d1a0d594"]]},{"id":"371f9d6aad0a960f","type":"OpcUa-Client","z":"fb72b2bb9fd6ca8d","endpoint":"5903a1fd5e87615c","action":"subscribe","deadbandtype":"a","deadbandvalue":1,"time":"5","timeUnit":"s","certificate":"n","localfile":"","localkeyfile":"","securitymode":"None","securitypolicy":"None","folderName4PKI":"","name":"","x":520,"y":340,"wires":[["5f9b8848d1a0d594"]]},{"id":"a1c9c6e23d9a277b","type":"OpcUa-Client","z":"fb72b2bb9fd6ca8d","endpoint":"5903a1fd5e87615c","action":"write","deadbandtype":"a","deadbandvalue":1,"time":10,"timeUnit":"s","certificate":"n","localfile":"","localkeyfile":"","securitymode":"None","securitypolicy":"None","folderName4PKI":"","name":"","x":860,"y":740,"wires":[["2e2cafa773c3d846"]]},{"id":"8a5a4734edfc5e2c","type":"moduleoutput","z":"fb72b2bb9fd6ca8d","client":"ad0fb0dd.c701d","output":"Output1","x":970,"y":300,"wires":[]},{"id":"5f9b8848d1a0d594","type":"function","z":"fb72b2bb9fd6ca8d","name":"Reported msg","func":"var reported = { payload:\n\"{\\\"\" + msg.topic + \"\\\": \\\"\" + msg.payload + \"\\\"}\" }\nreturn reported;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":740,"y":300,"wires":[["8a5a4734edfc5e2c"]]},{"id":"d49a54ec69d3c693","type":"modulemethod","z":"fb72b2bb9fd6ca8d","client":"ad0fb0dd.c701d","method":"echo","x":220,"y":1260,"wires":[["8dc67be250cf1866"]]},{"id":"8dc67be250cf1866","type":"function","z":"fb72b2bb9fd6ca8d","name":"","func":"var response = { payload:\n\"{\\\"response\\\": \\\"\" + JSON.stringify(msg.payload) + \"\\\"}\" }\nresponse.payload.timestamp = Date.now()\nresponse.status = 100\nreturn response;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":240,"y":1360,"wires":[["d49a54ec69d3c693","37236503fd0db588"]]},{"id":"37236503fd0db588","type":"debug","z":"fb72b2bb9fd6ca8d","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":530,"y":1360,"wires":[]},{"id":"3e248cc6efdf1f7f","type":"modulemethod","z":"fb72b2bb9fd6ca8d","client":"ad0fb0dd.c701d","method":"fanSpeed","x":260,"y":920,"wires":[["ab75078e9269b453"]]},{"id":"3e1eabe5f16fca62","type":"function","z":"fb72b2bb9fd6ca8d","name":"","func":"var response = { payload:\n\"{\\\"response\\\": \\\"\" + JSON.stringify(msg.payload) + \"\\\"}\" }\nresponse.payload.timestamp = Date.now()\nresponse.status = 100\nreturn response;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":240,"y":1100,"wires":[["3e248cc6efdf1f7f","5bf1e7af24efb864"]]},{"id":"5bf1e7af24efb864","type":"debug","z":"fb72b2bb9fd6ca8d","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","statusVal":"","statusType":"auto","x":490,"y":1020,"wires":[]},{"id":"7325746877a06253","type":"modulemethod","z":"fb72b2bb9fd6ca8d","client":"ad0fb0dd.c701d","method":"lampOn","x":250,"y":460,"wires":[["47285fbcad400804","4fc25e5867785c6e"]]},{"id":"3aa5deded8476001","type":"function","z":"fb72b2bb9fd6ca8d","name":"","func":"var response = { payload:\n\"{\\\"response\\\": \\\"\" + JSON.stringify(msg.payload) + \"\\\"}\" }\nresponse.payload.timestamp = Date.now()\nresponse.status = 100\nreturn response;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":240,"y":640,"wires":[["7325746877a06253"]]},{"id":"47285fbcad400804","type":"debug","z":"fb72b2bb9fd6ca8d","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":550,"y":500,"wires":[]},{"id":"4fc25e5867785c6e","type":"function","z":"fb72b2bb9fd6ca8d","name":"","func":"if (msg.payload == null) {\n    msg.payload = false;\n}\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":270,"y":520,"wires":[["3aa5deded8476001","6747daed85c0e614"]]},{"id":"ab75078e9269b453","type":"function","z":"fb72b2bb9fd6ca8d","name":"","func":"if (msg.payload == null){\n    msg.payload = 0;\n}\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":230,"y":1000,"wires":[["97d9d8e780bb77b0","3e1eabe5f16fca62"]]},{"id":"c1b42177e24a6d89","type":"comment","z":"fb72b2bb9fd6ca8d","name":"Send Telmetry","info":"","x":410,"y":200,"wires":[]},{"id":"d0f74f0dc838277e","type":"comment","z":"fb72b2bb9fd6ca8d","name":"Process Commands","info":"","x":460,"y":420,"wires":[]},{"id":"2625d06ae6e85f6a","type":"moduletwin","z":"fb72b2bb9fd6ca8d","client":"ad0fb0dd.c701d","x":530,"y":100,"wires":[["08ebc0118865e805"]]},{"id":"08ebc0118865e805","type":"debug","z":"fb72b2bb9fd6ca8d","name":"Twin msg","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":700,"y":100,"wires":[]},{"id":"40486bd61a22bb09","type":"inject","z":"fb72b2bb9fd6ca8d","name":"Node-RED Online","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":true,"onceDelay":"0.1","topic":"","payload":"Node-RED Online","payloadType":"str","x":150,"y":100,"wires":[["a7887a1dfe644b63"]]},{"id":"a7887a1dfe644b63","type":"function","z":"fb72b2bb9fd6ca8d","name":"Reported msg","func":"var reported = { payload:\n\"{\\\"location\\\": \\\"\" + msg.payload + \"\\\"}\" }\nreturn reported;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":340,"y":100,"wires":[["2625d06ae6e85f6a"]]},{"id":"5903a1fd5e87615c","type":"OpcUa-Endpoint","endpoint":"opc.tcp://192.168.30.11:4840","secpol":"None","secmode":"None","none":false,"login":false,"usercert":false,"usercertificate":"","userprivatekey":""},{"id":"ad0fb0dd.c701d","type":"edgeclient"}]
+[
+    {
+        "id": "81e64133e524daf6",
+        "type": "tab",
+        "label": "Beckhoff",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "40d34e0aac11bfb8",
+        "type": "inject",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payloadType": "str",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "d047938654663578",
+                "b25ccd17eab092e0",
+                "1deeb68e3f6c3ec4"
+            ]
+        ]
+    },
+    {
+        "id": "5a7d2e15951a0dfa",
+        "type": "inject",
+        "z": "81e64133e524daf6",
+        "name": "Light On",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 440,
+        "y": 660,
+        "wires": [
+            [
+                "b184aef5d57082ba"
+            ]
+        ]
+    },
+    {
+        "id": "ae70075b775354fb",
+        "type": "inject",
+        "z": "81e64133e524daf6",
+        "name": "Light Off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 440,
+        "y": 700,
+        "wires": [
+            [
+                "b184aef5d57082ba"
+            ]
+        ]
+    },
+    {
+        "id": "63e321233c9f7193",
+        "type": "inject",
+        "z": "81e64133e524daf6",
+        "name": "Fan On",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "32000",
+        "payloadType": "str",
+        "x": 450,
+        "y": 780,
+        "wires": [
+            [
+                "b80e20c9c786f747"
+            ]
+        ]
+    },
+    {
+        "id": "c1fa747d5907aa1d",
+        "type": "inject",
+        "z": "81e64133e524daf6",
+        "name": "Fan Off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 450,
+        "y": 820,
+        "wires": [
+            [
+                "b80e20c9c786f747"
+            ]
+        ]
+    },
+    {
+        "id": "dd790f837a8258f6",
+        "type": "debug",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "d047938654663578",
+        "type": "OpcUa-Item",
+        "z": "81e64133e524daf6",
+        "item": "ns=4;s=MAIN.nTemperature",
+        "datatype": "Int16",
+        "value": "",
+        "name": "nTemperature",
+        "x": 300,
+        "y": 260,
+        "wires": [
+            [
+                "26310d8158295a2f"
+            ]
+        ]
+    },
+    {
+        "id": "b25ccd17eab092e0",
+        "type": "OpcUa-Item",
+        "z": "81e64133e524daf6",
+        "item": "ns=4;s=MAIN.nFan",
+        "datatype": "UInt16",
+        "value": "",
+        "name": "nFan",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "007b7a8de8250406"
+            ]
+        ]
+    },
+    {
+        "id": "b184aef5d57082ba",
+        "type": "OpcUa-Item",
+        "z": "81e64133e524daf6",
+        "item": "ns=4;s=MAIN.bLamp",
+        "datatype": "Boolean",
+        "value": "msg.payload",
+        "name": "Control Lamp",
+        "x": 640,
+        "y": 680,
+        "wires": [
+            [
+                "69ac06d4db69ce13"
+            ]
+        ]
+    },
+    {
+        "id": "1deeb68e3f6c3ec4",
+        "type": "OpcUa-Item",
+        "z": "81e64133e524daf6",
+        "item": "ns=4;s=MAIN.bLamp",
+        "datatype": "String",
+        "value": "",
+        "name": "bLamp",
+        "x": 330,
+        "y": 340,
+        "wires": [
+            [
+                "c8172d52657bc849"
+            ]
+        ]
+    },
+    {
+        "id": "b80e20c9c786f747",
+        "type": "OpcUa-Item",
+        "z": "81e64133e524daf6",
+        "item": "ns=4;s=MAIN.nFan",
+        "datatype": "UInt16",
+        "value": "msg.payload",
+        "name": "Fan Control",
+        "x": 650,
+        "y": 800,
+        "wires": [
+            [
+                "69ac06d4db69ce13"
+            ]
+        ]
+    },
+    {
+        "id": "26310d8158295a2f",
+        "type": "OpcUa-Client",
+        "z": "81e64133e524daf6",
+        "endpoint": "785716c79e1faab9",
+        "action": "subscribe",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "5",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "",
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [
+                "c1b20722b5265afa"
+            ]
+        ]
+    },
+    {
+        "id": "007b7a8de8250406",
+        "type": "OpcUa-Client",
+        "z": "81e64133e524daf6",
+        "endpoint": "785716c79e1faab9",
+        "action": "subscribe",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "5",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "",
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "c1b20722b5265afa"
+            ]
+        ]
+    },
+    {
+        "id": "c8172d52657bc849",
+        "type": "OpcUa-Client",
+        "z": "81e64133e524daf6",
+        "endpoint": "785716c79e1faab9",
+        "action": "subscribe",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "5",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "",
+        "x": 520,
+        "y": 340,
+        "wires": [
+            [
+                "c1b20722b5265afa"
+            ]
+        ]
+    },
+    {
+        "id": "69ac06d4db69ce13",
+        "type": "OpcUa-Client",
+        "z": "81e64133e524daf6",
+        "endpoint": "785716c79e1faab9",
+        "action": "write",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "",
+        "x": 860,
+        "y": 740,
+        "wires": [
+            [
+                "dd790f837a8258f6"
+            ]
+        ]
+    },
+    {
+        "id": "10c0d00ed7b22eda",
+        "type": "moduleoutput",
+        "z": "81e64133e524daf6",
+        "client": "ad0fb0dd.c701d",
+        "output": "Output1",
+        "x": 970,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c1b20722b5265afa",
+        "type": "function",
+        "z": "81e64133e524daf6",
+        "name": "Reported msg",
+        "func": "var reported = { payload:\n\"{\\\"\" + msg.topic + \"\\\": \\\"\" + msg.payload + \"\\\"}\" }\nreturn reported;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "10c0d00ed7b22eda"
+            ]
+        ]
+    },
+    {
+        "id": "bb5cb98199170df8",
+        "type": "modulemethod",
+        "z": "81e64133e524daf6",
+        "client": "ad0fb0dd.c701d",
+        "method": "fanSpeed",
+        "x": 260,
+        "y": 920,
+        "wires": [
+            [
+                "3bf36038a0cf3790"
+            ]
+        ]
+    },
+    {
+        "id": "097c82e251ebd0d8",
+        "type": "function",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "func": "var response = { payload:\n\"{\\\"response\\\": \\\"\" + JSON.stringify(msg.payload) + \"\\\"}\" }\nresponse.payload.timestamp = Date.now()\nresponse.status = 100\nreturn response;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 1100,
+        "wires": [
+            [
+                "bb5cb98199170df8",
+                "6a68da7edf2b67ef"
+            ]
+        ]
+    },
+    {
+        "id": "6a68da7edf2b67ef",
+        "type": "debug",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "65bb85d60f2db523",
+        "type": "modulemethod",
+        "z": "81e64133e524daf6",
+        "client": "ad0fb0dd.c701d",
+        "method": "lampOn",
+        "x": 250,
+        "y": 460,
+        "wires": [
+            [
+                "3f898604682c6b4c",
+                "d62b4645ec37c495"
+            ]
+        ]
+    },
+    {
+        "id": "b221cdbc8eae75de",
+        "type": "function",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "func": "var response = { payload:\n\"{\\\"response\\\": \\\"\" + JSON.stringify(msg.payload) + \"\\\"}\" }\nresponse.payload.timestamp = Date.now()\nresponse.status = 100\nreturn response;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 640,
+        "wires": [
+            [
+                "65bb85d60f2db523"
+            ]
+        ]
+    },
+    {
+        "id": "3f898604682c6b4c",
+        "type": "debug",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "d62b4645ec37c495",
+        "type": "function",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "func": "if (msg.payload == null) {\n    msg.payload = false;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 520,
+        "wires": [
+            [
+                "b221cdbc8eae75de",
+                "b184aef5d57082ba"
+            ]
+        ]
+    },
+    {
+        "id": "3bf36038a0cf3790",
+        "type": "function",
+        "z": "81e64133e524daf6",
+        "name": "",
+        "func": "if (msg.payload == null){\n    msg.payload = 0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 1000,
+        "wires": [
+            [
+                "b80e20c9c786f747",
+                "097c82e251ebd0d8"
+            ]
+        ]
+    },
+    {
+        "id": "484533934241327d",
+        "type": "comment",
+        "z": "81e64133e524daf6",
+        "name": "Send Telmetry",
+        "info": "",
+        "x": 410,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e2160c7fa7606d4c",
+        "type": "comment",
+        "z": "81e64133e524daf6",
+        "name": "Process Commands",
+        "info": "",
+        "x": 460,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b2ec606d8d414146",
+        "type": "moduletwin",
+        "z": "81e64133e524daf6",
+        "client": "ad0fb0dd.c701d",
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "a84be37c277aa4c3"
+            ]
+        ]
+    },
+    {
+        "id": "a84be37c277aa4c3",
+        "type": "debug",
+        "z": "81e64133e524daf6",
+        "name": "Twin msg",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "19e3e612b5260e91",
+        "type": "inject",
+        "z": "81e64133e524daf6",
+        "name": "Node-RED Online",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "Node-RED Online",
+        "payloadType": "str",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "21495e5d518577dc"
+            ]
+        ]
+    },
+    {
+        "id": "21495e5d518577dc",
+        "type": "function",
+        "z": "81e64133e524daf6",
+        "name": "Reported msg",
+        "func": "var reported = { payload:\n\"{\\\"location\\\": \\\"\" + msg.payload + \"\\\"}\" }\nreturn reported;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 100,
+        "wires": [
+            [
+                "b2ec606d8d414146"
+            ]
+        ]
+    },
+    {
+        "id": "785716c79e1faab9",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://192.168.30.11:4840",
+        "secpol": "None",
+        "secmode": "None",
+        "none": false,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "ad0fb0dd.c701d",
+        "type": "edgeclient"
+    }
+]
