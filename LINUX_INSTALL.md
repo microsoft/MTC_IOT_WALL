@@ -5,16 +5,24 @@ I have decided to release a dedicated installation guide for a deployment of IoT
 - IoT Edge runs on Linux. It does not run on Windows. Deploying on Windows requires a Linux VM (either WSL or Hyper-V) and thus is just a layer that is not neccesary as it adds more complexity, and increases the opportunity for problems.
 - The IoT Wall Gateway computer (HP) has limited storage, and runs an older (4th-Gen) Intel Processor. Running Windows 10 on the MTC Floor would show that we aren't able to support the latest OS for our showcase solution with Industrial IoT. And Linux is a better choice of an Edge Computing Device.
 
-<<TODO: Everything below>>
+>**Please Note:** The OPC UA Wall is an evolving solution and will continue to be improved through the coming weeks and months. I'll be posting a list of roadmap features and showcases that you can leverage for your customer events. If you would like to assist, I'm looking for volunteers. Reach out to me directly.
 
-**Please Note:** The OPC UA Wall is an evolving solution and will continue to be improved through the coming weeks and months. I'll be posting a list of roadmap features and showcases that you can leverage for your customer events. If you would like to assist, I'm looking for volunteers. Reach out to me directly.
+Thank You
 
-Kevin Orbaker
+Kevin
 
 ## HP Gateway Setup
 
-The HP gateway installed on the OPC wall must be installed/upgraded with the latest version of Windows 10 Enterprise (currently this is build 21H2). It is best if you do a clean installation of Windows 10. Storage on the HP gateway is limited. Do not install any unnecessary software. Please make sure all updates are completed prior to proceeding with the installation. After all Windows Updates are applied, run Disk Cleanup on the C: drive (include system files) to free up space.
+Download the latest **supported** 64-bit Desktop Image of Ubuntu Linux distrabution (at the time of creating these instructions it was Ubuntu 20.04 LTS) from the Ubuntu [website](https://releases.ubuntu.com/20.04/).
 
+Once you have downloaded the ISO image you will need to write the ISO image to a USB (3.0/3.1) thumbdrive. I used the Raspberry Pi Imager found [here](https://www.raspberrypi.com/software/). An alternative is Win32DiskImager found [here](https://sourceforge.net/projects/win32diskimager/)
+
+Use the thumbdrive to install a fresh image of Ubuntu on the HP Gateway machine. If you have not installed Ubunbtu, there are some great tutorials online. [I like this one](https://ubuntu.com/tutorials/install-ubuntu-desktop?msclkid=7da411b7d0c011ecbac877d8a0a8d735#1-overview)
+
+>Don't forget to update! Make sure you have run through the Ubunutu updates before you continue.
+
+
+<<TODO>>
 ### Update Network Settings
 
 *This is a critical step as it must be done prior to the next steps.* The HP Gateway comes with two ethernet ports. Both ports are connected to the same switch, and by default, they both grab an IP Address from whatever DHCP server your wall is connected to. We need to assign a **static IP address** to one of the ports to ensure it can communicate with the devices that are plugged into the IoT Wall.
