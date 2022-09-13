@@ -87,41 +87,6 @@ The OPC UA IIoT Wall is hosted on IoT Central in the EXP tenant. To onboard your
 
 Once you have successfully deployed **EFLOW** on your gateway device, it will take a few minutes for IoT Central to push down all the updates. 
 
-> **Note**: Before proceeding with the next steps, wait until you see your Modles showing a status of 'Running' (see screenshot)
-![Modules Deployed](images/iot-central-modules-deployed.jpg)
-
-## Deploy the Local Node-RED Flow
-
-The final step is to deploy the Node-RED Flow for the Beckhoff Controller. This process will capture and report the Telemetry from the Beckhoff sensors and services (Temperature, Fan Speed, and Lamp Status) as well as process commands from IoT Central (Enable/Disable the Lamp, Set the Fan Speed from 0-32,000 RPM)
-
-- From Microsoft Edge on the HP gateway, navigate to <http://localhost:1880>
-
->You will be promted to login to Node-RED. Please see the IoT Teams Channel for this information.
->At this point you might be promoted to **Create Project**. Click **Not right now**
-
-- In the upper right-hand corner of the Node-RED canvas there is a *hamburger* menu option (three lines).
-- Click on the hamburger menu and select **Manage Palette**
-  - Click on the **Install** tab
-  - Search for *node-red-contrib-opcua*
-  - Click **Install**, and then click **Install** from the pop-up
-  - Once complete click **Close**
-
->This should take less than 1 minute to complete. You will see a pop-up window with the list of nodes that were installed.
-
-- Click on the hamburger menu and select **Import**
-- From the **Import nodes** window
-  - Select **Clipboard** and copy and paste the following [JSON](flows/beckhoff-flow.json) into the text area in the window and click **Import**
-
->At this point you might be prompted for another action. If so, click **Import copy**
-
-You should see three tabs across the top of the Node-RED canvas.
-Before you continue with the deployment, you will need to delete the two tabs that were created when Node-RED was initialized for the first time. The two tabs are labeled **Azure IoT Edge** and **Dashboard**.
-
-- Double-click on the **Azure IoT Edge** tab
-- From the pop-out window, click **Delete**
-- Repeat the previous two steps for the **Dashboard** tab
-- Finally, click **Deploy** in the upper right-hand corner of the canvas.
-
 ## Congratulations
 
 Your OPC UA IIoT wall has been deployed and is ready for use. You should see Beckhoff Telemetry being sent to your wall.
