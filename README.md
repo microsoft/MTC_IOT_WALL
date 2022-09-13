@@ -2,19 +2,33 @@
 
 I am proud to announce the release of the Next Generation OPC UA IIoT Wall. This document will provide the steps to ensure a successful rollout. I'd like to thank **Ranga Vadlamudi**, from the IoT Central team for his late night and weekend support. I'd like to thank **Hans Gschoßmann** for his insights to the OPC UA integration. A final thank you to **Ali Mazaheri** and **Chad Gronbach** for their time and leadership while I struggled to rebuild the OPC UA wall into an impactful demo and showcase for our customers.
 
+>I want to add a special thank to **Brad Murphy** for his support and persistance! I wouldn't have been able to get this done without his support.
+
 **Please Note:** The OPC UA Wall is an evolving solution and will continue to be improved through the coming weeks and months. I'll be posting a list of roadmap features and showcases that you can leverage for your customer events. If you would like to assist, I'm looking for volunteers. Reach out to me directly.
 
 Kevin Orbaker
 
 ## HP Gateway Setup
 
-The HP gateway installed on the OPC wall must be installed/upgraded with the latest version of Windows 10 Enterprise (currently this is build 21H2). It is best if you do a clean installation of Windows 10. Storage on the HP gateway is limited. Do not install any unnecessary software. Please make sure all updates are completed prior to proceeding with the installation. After all Windows Updates are applied, run Disk Cleanup on the C: drive (include system files) to free up space.
+The HP gateway installed on the OPC wall must be installed/upgraded with the latest version of [Windows 10 IoT Enterprise LTS](https://microsoft.sharepoint.com/:f:/t/MTCIESCommunity/EtlIMAxMDhFDi2K7XVo4c_gBnuWzI-ANKgQYtpHDJUT9CA?e=SPSNcv "Windows 10 IoT Enterprise LTS"). You must do a clean installation. Do not install any unnecessary software.
+
+Once you have done an installation, make sure all updates are completed prior to proceeding with the installation. 
+
+>Note: You might have to run Windows Update multiple times to get all the updates.
+
+After all Windows Updates are applied, run [Disk Cleanup](https://support.microsoft.com/en-us/windows/disk-cleanup-in-windows-8a96ff42-5751-39ad-23d6-434b4d5b9a68) on the C: drive (include system files) to free up space.
 
 ### Update Network Settings
 
-*This is a critical step as it must be done prior to the next steps.* The HP Gateway comes with two ethernet ports. Both ports are connected to the same switch, and by default, they both grab an IP Address from whatever DHCP server your wall is connected to. We need to assign a **static IP address** to one of the ports to ensure it can communicate with the devices that are plugged into the IoT Wall.
+>This is a critical step as it must be done prior to the next steps.
 
-From Windows, press **Windows + R**. From the Run dialog enter  **control panel** and click **OK**
+The HP Gateway comes with two ethernet ports. Both ports are connected to the same switch, and by default, they both grab an IP Address from whatever DHCP server your wall is connected to. 
+
+One of the ports must be assigned a **static IP address** to one of the ports to ensure it can communicate with the devices that are plugged into the IoT Wall.
+
+#### Assign a Static IP Address
+
+* From Windows, press **Windows + R**. From the Run dialog enter  **control panel** and click **OK**
 
 - From Control Panel select **Network and Internet** and then select **Network and Sharing Center**.
 - From there you should see two ethernet connections. Names for these might vary (mine was labeled Ethernet and Ethernet 3). Choose one of the connections and select it.
@@ -28,29 +42,53 @@ From Windows, press **Windows + R**. From the Run dialog enter  **control panel*
 
 - Click **OK** then **Close**
 
-### Install WSL2
+### Install and Provision EFLOW
 
-You will need to install the Windows Subsystem for Linux v2 (WSL2) by following the steps outlined from [here](https://docs.microsoft.com/en-us/windows/wsl/install). The default installation uses Ubuntu. Do not change the default Linux Distribution as Ubuntu is the only Distro that has been tested.
+EFLOW (Edge for Linus on Windows) let's you run Auzure IoT Edge in a Linux container on Windows.
 
-### Install Docker Desktop
+1. In an elevated PowerShell session, run each of the following commands to download IoT Edge for Linux on Windows.
 
-Now, install Docker Desktop from [here](https://www.docker.com/products/docker-desktop). Please note that Docker Desktop should be configured using its WSL2 engine and it should be automatically started when you log in (check the Settings page of the Docker Desktop app running in the System Tray).
+    ```
+    Set-ExecutionPolicy -ExecutionPolicy AllSigned -Force
+    $msiPath = $([io.Path]::Combine($env:TEMP, 'AzureIoTEdge.msi'))
+    $ProgressPreference = 'SilentlyContinue'
+    Invoke-WebRequest "https://aka.ms/AzEflowMSI" -OutFile $msiPath
+    ```
+
+2. Install IoT Edge for Linux on Windows on your device.
+
+    ```
+    Start-Process -Wait msiexec -ArgumentList "/i","$([io.Path]::Combine($env:TEMP, 'AzureIoTEdge.msi'))","/qn"
+    ```
+
+  3. Create the IoT Edge for Linux on Windows deployment. The deployment creates your Linux VM and installs the IoT Edge runtime for you.
+
+      ```
+      Deploy-Eflow -cpuCount 2 -memoryInMB 4096 -vmDiskSize 20 
+      ```
 
 ## Onboarding Your OPC UA IIoT Wall
 
 The OPC UA IIoT Wall is hosted on IoT Central in the EXP tenant. To onboard your wall, you will need to do the following.
 
-- Login to the [OPC UA IIoT Wall portal](https://opc-ua-iot-wall.azureiotcentral.com/devices) with your **Manager, Product Development - Engineering** persona. For example: In Irvine, it is **Aamil Shammas**. Find the Persona for your Location [here](https://exppeople.azurewebsites.net/)
+- Login to the [OPC UA IIoT Portal](https://opc-ua-iot-wall.azureiotcentral.com/devices) with your **Manager, Product Development - Engineering** persona. For example: In Irvine, it is **Aamil Shammas**. Find the Persona for your Location [here](https://exppeople.azurewebsites.net/)
 - Select your location from the list.
-- From the Device screen, select **Connect** in the upper left corner of the display. You will need the ID Scope, Device ID and Primary Key, to onboard your Wall during the IoT Edge runtime installation in the next step.
-- Now, install the IoT Edge runtime using the IoT Edge Installer from [here](https://github.com/Azure/Industrial-IoT-Gateway-Installer/raw/master/Releases/Windows/setup.exe). No not run the IoT Edge Installer directly from the Web. You will need to download the installer, then ***run it with Administrator privileges***.
+- From the Device screen, select **Connect** in the upper left corner of the display. You will need the **ID Scope**, **Device ID** and **Primary Key**, to onboard your Wall during the IoT Edge runtime installation in the next step.
 
-- Select **Use Docker Desktop** and **Configure IoT Edge for Azure IoT Central (SaaS**). Provide ID Scope, Device ID and Primary Key from the previous step. Click install.
+   ![IoT Central Connect](images/iot-central-connect-sample.jpg)
 
->The installer will make sure all prerequisites are installed, and you may have to reboot and rerun the IoT Edge Installer should a prerequisite need to be installed first. Eventually, the IoT Edge Installer will complete with "This part of the installation is now complete".
->After a while, the **Edge Agent**, **Edge Hub**, and **Node-RED** Docker modules will be running on the gateway and can be monitored in the Docker Desktop app running in the System Tray.
+- Use the ID scope, Device ID and the Primary Key you made a note of previously
 
-Before proceeding to the final step, please wait until the Node-RED service is deployed to the wall.
+    ```
+    Provision-EflowVm -provisioningType DpsSymmetricKey -scopeId <ID_SCOPE_HERE> -registrationId <DEVCIE_ID_HERE> -symmKey <PRIMARY_KEY_HERE>
+    ```
+
+   > Note: You will likely need to execute the above command two times. Durnig the first execution, you might need to restart, and then execute the above statement again.
+
+Once you have successfully deployed **EFLOW** on your gateway device, it will take a few minutes for IoT Central to push down all the updates. 
+
+> **Note**: Before proceeding with the next steps, wait until you see your Modles showing a status of 'Running' (see screenshot)
+![Modules Deployed](images/iot-central-modules-deployed.jpg)
 
 ## Deploy the Local Node-RED Flow
 
