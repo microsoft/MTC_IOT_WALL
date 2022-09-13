@@ -50,6 +50,8 @@ A **static IP address** must be assigned to one of the ports to ensure it can co
 
 EFLOW (Edge for Linux on Windows) let's you run Auzure IoT Edge in a Linux container on Windows.
 
+> Please note that you may have a number of prompts during the installation process that will have to agree to the Microsoft EULA.
+
 1. In an elevated PowerShell session, run each of the following commands to download IoT Edge for Linux on Windows.
 
     ```
@@ -70,6 +72,7 @@ EFLOW (Edge for Linux on Windows) let's you run Auzure IoT Edge in a Linux conta
       ```
       Deploy-Eflow -cpuCount 2 -memoryInMB 4096 -vmDiskSize 20 
       ```
+   > Note: You will likely need to execute the above command two times. Durnig the first execution, you might need to restart, and then execute the above statement again.
 
 ## Onboarding Your OPC UA IIoT Wall
 
@@ -86,8 +89,6 @@ The OPC UA IIoT Wall is hosted on IoT Central in the EXP tenant. To onboard your
     ```
     Provision-EflowVm -provisioningType DpsSymmetricKey -scopeId <ID_SCOPE_HERE> -registrationId <DEVCIE_ID_HERE> -symmKey <PRIMARY_KEY_HERE>
     ```
-
-   > Note: You will likely need to execute the above command two times. Durnig the first execution, you might need to restart, and then execute the above statement again.
 
 Once you have successfully deployed **EFLOW** on your gateway device, it will take a few minutes for IoT Central to push down all the updates.
 
