@@ -12,6 +12,8 @@ Kevin Orbaker
 
 The HP gateway installed on the OPC wall must be installed/upgraded with the latest version of [Windows 10 IoT Enterprise LTS](https://microsoft.sharepoint.com/:f:/t/MTCIESCommunity/EtlIMAxMDhFDi2K7XVo4c_gBnuWzI-ANKgQYtpHDJUT9CA?e=SPSNcv "Windows 10 IoT Enterprise LTS"). You must do a clean installation. Do not install any unnecessary software.
 
+> During the installation, you will need to enter a License Key. You can get the key from either [Brad Murphy](mailto:v-bramur@microsoft.com) or [Kevin Orbaker](mailto:keorba@microsoft.com) for the Windows IoT Enterprise Key.
+
 Once you have done an installation, make sure all updates are completed prior to proceeding with the installation. 
 
 >Note: You might have to run Windows Update multiple times to get all the updates.
