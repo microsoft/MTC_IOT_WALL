@@ -26,14 +26,14 @@ After all Windows Updates are applied, run [Disk Cleanup](https://support.micros
 
 The HP Gateway comes with two ethernet ports. Both ports are connected to the same switch, and by default, they both grab an IP Address from whatever DHCP server your wall is connected to. 
 
-One of the ports must be assigned a **static IP address** to one of the ports to ensure it can communicate with the devices that are plugged into the IoT Wall.
+A **static IP address** must be assigned to one of the ports to ensure it can communicate with the IoT devices that are plugged into the IoT Wall.
 
 #### Assign a Static IP Address
 
-* From Windows, press **Windows + R**. From the Run dialog enter  **control panel** and click **OK**
+- From Windows, press **Windows + R**. From the Run dialog enter  **control panel** and click **OK**
 
 - From Control Panel select **Network and Internet** and then select **Network and Sharing Center**.
-- From there you should see two ethernet connections. Names for these might vary (mine was labeled Ethernet and Ethernet 3). Choose one of the connections and select it.
+- From there you should see two ethernet connections. Names for these might vary (mine was labeled Ethernet and Ethernet 3). Select the first connection.
 - From the Ethernet x Status Dialog, click **Properties**
 - From the Properties Dialog, click **Internet Protocol Version 4(TCP/IPv4)** and click **Properties**
 - From the **Internet Protocol Version 4** dialog, click **Use the following IP address:** and enter the following:
@@ -44,9 +44,11 @@ One of the ports must be assigned a **static IP address** to one of the ports to
 
 - Click **OK** then **Close**
 
+> To confirm that you have successfully changed the IP address, make sure you can PING 192.168.30.11. If you cannot PING that IP address. You will need to validate your IP configuration, or you might have an issue with your IoT wall. Please reach out for assistance if you can't PING 192.168.30.11.
+
 ### Install and Provision EFLOW
 
-EFLOW (Edge for Linus on Windows) let's you run Auzure IoT Edge in a Linux container on Windows.
+EFLOW (Edge for Linux on Windows) let's you run Auzure IoT Edge in a Linux container on Windows.
 
 1. In an elevated PowerShell session, run each of the following commands to download IoT Edge for Linux on Windows.
 
@@ -87,7 +89,10 @@ The OPC UA IIoT Wall is hosted on IoT Central in the EXP tenant. To onboard your
 
    > Note: You will likely need to execute the above command two times. Durnig the first execution, you might need to restart, and then execute the above statement again.
 
-Once you have successfully deployed **EFLOW** on your gateway device, it will take a few minutes for IoT Central to push down all the updates. 
+Once you have successfully deployed **EFLOW** on your gateway device, it will take a few minutes for IoT Central to push down all the updates.
+
+It should look  similar to below.
+![IoT Edge REady](images/iot-central-modules-running.png) 
 
 ## Congratulations
 

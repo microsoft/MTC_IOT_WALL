@@ -1,0 +1,68 @@
+{
+    "modulesContent": {
+        "$edgeAgent": {
+            "properties.desired": {
+                "modules": {
+                    "NodeREDonIoTEdge": {
+                        "settings": {
+                            "image": "marketplace.azurecr.io/1604376875527/wedx-nodered",
+                            "createOptions": "{\"HostConfig\": {\"PortBindings\": {\"1880/tcp\": [{\"HostPort\": \"1880\"}]},\"Privileged\": true}}"
+                        },
+                        "type": "docker",
+                        "env": {
+                            "TZ": {
+                                "value": "America/Los_Angeles"
+                            },
+                            "NODE_RED_CREDENTIAL_SECRET": {
+                                "value": "nodered"
+                            },
+                            "NODE_RED_ENABLE_PROJECTS": {
+                                "value": "true"
+                            }
+                        },
+                        "status": "running",
+                        "restartPolicy": "always",
+                        "version": "1.0"
+                    }
+                },
+                "runtime": {
+                    "settings": {
+                        "minDockerVersion": "v1.25"
+                    },
+                    "type": "docker"
+                },
+                "schemaVersion": "1.1",
+                "systemModules": {
+                    "edgeAgent": {
+                        "settings": {
+                            "image": "mcr.microsoft.com/azureiotedge-agent:1.1",
+                            "createOptions": ""
+                        },
+                        "type": "docker"
+                    },
+                    "edgeHub": {
+                        "settings": {
+                            "image": "mcr.microsoft.com/azureiotedge-hub:1.1",
+                            "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"443/tcp\":[{\"HostPort\":\"443\"}],\"5671/tcp\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}]}}}"
+                        },
+                        "type": "docker",
+                        "status": "running",
+                        "restartPolicy": "always"
+                    }
+                }
+            }
+        },
+        "$edgeHub": {
+            "properties.desired": {
+                "routes": {
+                    "route": "FROM /messages/* INTO $upstream",
+                    "FromNodeREDonIoTEdge": "FROM /messages/modules/NodeREDonIoTEdge/outputs/* INTO $upstream"
+                },
+                "schemaVersion": "1.1",
+                "storeAndForwardConfiguration": {
+                    "timeToLiveSecs": 7200
+                }
+            }
+        }
+    }
+}
